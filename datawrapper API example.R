@@ -26,6 +26,9 @@ folder_id <- folder[["id"]]
 ## create function for weather line chart
 create_line_chart <- function(city) {
 
+  # set folder id
+  folder_id = 271618
+
   # load clean & prep data
   # recent is data for the last year
   cities_data <- selectDWD(city, res='daily', var='kl', per='recent')
@@ -44,7 +47,7 @@ create_line_chart <- function(city) {
   # create chart folder id = 271618
   # see https://developer.datawrapper.de/docs/chart-types for chart codes
   line <- dw_create_chart(
-    folderId = folder_id,
+    folderId = 271618,
     type = "d3-lines"
   )
 
@@ -57,7 +60,7 @@ create_line_chart <- function(city) {
   )
 
   dw_edit_chart(
-    chart_id = line_id
+    chart_id = line_id,
     folder_id = folder_id,
 
     title = sprintf('Daily temperatures in %s', city),
@@ -71,11 +74,32 @@ create_line_chart <- function(city) {
       'source-url' = 'https://bookdown.org/brry/rdwd/'),
 
     visualize = list(
+      'custom-colors' = list(
+        'Max' = 'gold', 'Min' = 'blue'),
 
+      'line-widths' = list(
+        'Max' = 3, 'Min' = 3),
 
+      'labeling' = 'top',
 
-    )
+      'custom-area-fills' = list(
+        list(
+          'from' = 'Max', 'to' = 'Min',
+          'color' = "#ddd", 'opacity' = 0.3)))
   )
+
+  dw_publish_chart(
+    chart_id = line_id,
+    return_urls = TRUE)
 }
 
 create_line_chart("Freiburg")
+
+
+## do multiple charts
+
+city_list <- list('Potsdam', "Berlin Brandenburg", "Frankfurt/Main")
+
+for (i in city_list) {
+  create_line_chart(i)
+}

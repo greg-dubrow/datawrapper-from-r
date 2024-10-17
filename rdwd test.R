@@ -2,8 +2,10 @@
 # Load the package into library (needed in every R session):
 library(rdwd)
 
+findID("Leipzig", exactmatch=FALSE)
+
 # select a dataset (e.g. last year's daily climate data from Potsdam city):
-link <- selectDWD("Potsdam", res="daily", var="kl", per="recent")
+link <- selectDWD("Leipzig-Boehlitz-Ehrenberg", res="daily", var="kl", per="recent")
 
 # Actually download that dataset, returning the local storage file name:
 file <- dataDWD(link, read=FALSE)
