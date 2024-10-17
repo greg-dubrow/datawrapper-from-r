@@ -41,10 +41,10 @@ create_line_chart <- function(city) {
   names(subset_clim)[names(subset_clim) == "TXK.Lufttemperatur_Max"] <- "Max"
   names(subset_clim)[names(subset_clim) == "TNK.Lufttemperatur_Min"] <- "Min"
 
-  # create chart
+  # create chart folder id = 271618
   # see https://developer.datawrapper.de/docs/chart-types for chart codes
   line <- dw_create_chart(
-    folderId = 271618,
+    folderId = folder_id,
     type = "d3-lines"
   )
 
@@ -54,6 +54,27 @@ create_line_chart <- function(city) {
   dw_data_to_chart(
     subset_clim,
     chart_id = line_id
+  )
+
+  dw_edit_chart(
+    chart_id = line_id
+    folder_id = folder_id,
+
+    title = sprintf('Daily temperatures in %s', city),
+    intro = "Daily temps in Celsius",
+    byline = "GKD",
+
+    annotate = sprintf('Chart updated on %s', format(Sys.time(), '%a %b %d %X %Y')),
+
+    describe = list(
+      'source-name' = 'German Weather Service (DWD)',
+      'source-url' = 'https://bookdown.org/brry/rdwd/'),
+
+    visualize = list(
+
+
+
+    )
   )
 }
 
